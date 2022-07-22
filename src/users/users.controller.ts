@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
@@ -29,8 +30,22 @@ export class UsersController {
   }
 
   @Get()
-  getAllUsers() {
-    return { data: this.usersServise.getAllUsers() };
+  getAllUsers(@Query() query) {
+    if (query.loginSubstring && query.limit) {
+      return {
+        data: this.usersServise.getAllUsers({
+          loginSubstring: query.loginSubstring,
+          limit: query.limit,
+        }),
+      };
+    } else {
+      return {
+        data: this.usersServise.getAllUsers({
+          loginSubstring: null,
+          limit: null,
+        }),
+      };
+    }
   }
 
   @Get(':userId')
@@ -58,5 +73,10 @@ export class UsersController {
   @Delete(':userId')
   removeUser(@Param('userId') userId: string) {
     return { removedUser: this.usersServise.removeUser(userId) };
+  }
+
+  @Get('allData')
+  getAllData() {
+    return this.usersServise.getAllData();
   }
 }

@@ -13,8 +13,16 @@ export class UsersService {
     return user;
   }
 
-  getAllUsers() {
-    return this.users.filter((el) => !el.isDeleted);
+  getAllUsers({ loginSubstring, limit }) {
+    if (loginSubstring && limit) {
+      const str = loginSubstring.replaceAll('"', '');
+      return this.users
+        .filter((el) => el.login.startsWith(str))
+        .sort((a, b) => a.login.localeCompare(b.login))
+        .slice(0, limit);
+    } else {
+      return this.users.filter((el) => !el.isDeleted);
+    }
   }
 
   getUser(id: string) {
@@ -47,6 +55,10 @@ export class UsersService {
     removedUser.isDeleted = true;
     this.users[userIndex] = removedUser;
     return removedUser;
+  }
+
+  getAllData() {
+    return [...this.users];
   }
 
   private findUser(id: string): [User, number] {
