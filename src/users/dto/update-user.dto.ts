@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Matches,
   Max,
@@ -10,10 +11,6 @@ import {
 } from 'class-validator';
 
 export class UpdateUserDTO {
-  @IsNotEmpty()
-  @IsString()
-  id: string;
-
   @IsNotEmpty()
   @IsString()
   login: string;
@@ -32,6 +29,7 @@ export class UpdateUserDTO {
   @Max(130)
   age: number;
 
+  @IsOptional()
   @IsBoolean()
   isDeleted: boolean;
 }

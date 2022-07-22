@@ -48,11 +48,11 @@ export class UsersService {
     throw new NotFoundException('Could not find user');
   }
 
-  updateUser(id, updateUserDTO: UpdateUserDTO) {
-    const [user, userIndex] = this.findUser(id);
-
-    this.users[userIndex] = updateUserDTO;
-    return updateUserDTO;
+  updateUser(id: string, updateUserDTO: UpdateUserDTO) {
+    const [_, userIndex] = this.findUser(id);
+    const updatedUser = { id, ...updateUserDTO };
+    this.users[userIndex] = updatedUser;
+    return updatedUser;
   }
 
   removeUser(id: string) {

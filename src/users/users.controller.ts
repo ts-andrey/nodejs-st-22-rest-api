@@ -39,9 +39,8 @@ export class UsersController {
   @Put(':userId')
   updateUser(
     @Param('userId') userId: string,
-    @Body('login') updateUserDTO: UpdateUserDTO,
+    @Body() updateUserDTO: UpdateUserDTO,
   ) {
-    console.log(updateUserDTO);
     return {
       updatedUser: this.usersServise.updateUser(userId, updateUserDTO),
     };
