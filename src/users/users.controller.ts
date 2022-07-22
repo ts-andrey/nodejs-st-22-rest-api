@@ -8,6 +8,9 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { GetUsersFilterDTO } from './dto/get-users-filter.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('v1/users')
@@ -15,37 +18,17 @@ export class UsersController {
   constructor(private readonly usersServise: UsersService) {}
 
   @Post()
-  createUser(
-    @Body('login') userLogin: string,
-    @Body('password') userPassword: string,
-    @Body('age') userAge: number,
-  ) {
+  createUser(@Body() createUserDTO: CreateUserDTO) {
     return {
-      createdUser: this.usersServise.createUser(
-        userLogin,
-        userPassword,
-        userAge,
-      ),
+      createdUser: this.usersServise.createUser(createUserDTO),
     };
   }
 
   @Get()
-  getAllUsers(@Query() query) {
-    if (query.loginSubstring && query.limit) {
-      return {
-        data: this.usersServise.getAllUsers({
-          loginSubstring: query.loginSubstring,
-          limit: query.limit,
-        }),
-      };
-    } else {
-      return {
-        data: this.usersServise.getAllUsers({
-          loginSubstring: null,
-          limit: null,
-        }),
-      };
-    }
+  getAllUsers(@Query() getUsersFilterDTO: GetUsersFilterDTO) {
+    return {
+      data: this.usersServise.getAllUsers(getUsersFilterDTO),
+    };
   }
 
   @Get(':userId')
@@ -56,17 +39,11 @@ export class UsersController {
   @Put(':userId')
   updateUser(
     @Param('userId') userId: string,
-    @Body('login') userLogin: string,
-    @Body('password') userPassword: string,
-    @Body('age') userAge: number,
+    @Body('login') updateUserDTO: UpdateUserDTO,
   ) {
+    console.log(updateUserDTO);
     return {
-      updatedUser: this.usersServise.updateUser(
-        userId,
-        userLogin,
-        userPassword,
-        userAge,
-      ),
+      updatedUser: this.usersServise.updateUser(userId, updateUserDTO),
     };
   }
 

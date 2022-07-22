@@ -1,25 +1,40 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, validate } from 'uuid';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { User } from './user.model';
+import { GetUsersFilterDTO } from './dto/get-users-filter.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
   private users: User[] = [];
 
-  createUser(login: string, password: string, age: number) {
-    const user = new User(uuidv4(), login, password, age, false);
+  createUser(createUserDTO: CreateUserDTO) {
+    const { login, password, age, isDeleted } = createUserDTO;
+    if (this.users.find((el) => el.login === login)) {
+      throw new BadRequestException({
+        statusCode: 409,
+        error: 'Conflict',
+        message: 'such login already exists',
+      });
+    }
+    const user = new User(uuidv4(), login, password, age, isDeleted || false);
     this.users.push(user);
     return user;
   }
 
-  getAllUsers({ loginSubstring, limit }) {
-    if (loginSubstring && limit) {
-      const str = loginSubstring.replaceAll('"', '');
+  getAllUsers(filter: GetUsersFilterDTO) {
+    if (filter.loginSubstring && filter.limit) {
+      const str = filter.loginSubstring.replace(/"/g, '');
       return this.users
-        .filter((el) => el.login.startsWith(str))
+        .filter((el) => el.login.startsWith(str) && !el.isDeleted)
         .sort((a, b) => a.login.localeCompare(b.login))
-        .slice(0, limit);
+        .slice(0, filter.limit);
     } else {
       return this.users.filter((el) => !el.isDeleted);
     }
@@ -33,20 +48,11 @@ export class UsersService {
     throw new NotFoundException('Could not find user');
   }
 
-  updateUser(id: string, login: string, password: string, age: number) {
+  updateUser(id, updateUserDTO: UpdateUserDTO) {
     const [user, userIndex] = this.findUser(id);
-    const updatedUser = { ...user };
-    if (login) {
-      updatedUser.login = login;
-    }
-    if (password) {
-      updatedUser.password = password;
-    }
-    if (age) {
-      updatedUser.age = age;
-    }
-    this.users[userIndex] = updatedUser;
-    return updatedUser;
+
+    this.users[userIndex] = updateUserDTO;
+    return updateUserDTO;
   }
 
   removeUser(id: string) {
@@ -62,11 +68,18 @@ export class UsersService {
   }
 
   private findUser(id: string): [User, number] {
-    const userIndex = this.users.findIndex((user) => user.id === id);
-    const user = this.users[userIndex];
-    if (!user) {
-      throw new NotFoundException('Could not find user');
+    if (validate(id)) {
+      const userIndex = this.users.findIndex((user) => user.id === id);
+      const user = this.users[userIndex];
+      if (!user) {
+        throw new NotFoundException('Could not find user');
+      }
+      return [user, userIndex];
     }
-    return [user, userIndex];
+    throw new BadRequestException({
+      statusCode: 400,
+      error: 'Bad Request',
+      message: 'Not valid id',
+    });
   }
 }
