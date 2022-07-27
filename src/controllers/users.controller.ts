@@ -8,10 +8,10 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
-import { CreateUserDTO } from './dto/create-user.dto';
-import { GetUsersFilterDTO } from './dto/get-users-filter.dto';
-import { UpdateUserDTO } from './dto/update-user.dto';
-import { UsersService } from './users.service';
+import { CreateUserDTO } from '../models/dto/create-user.dto';
+import { GetUsersFilterDTO } from '../models/dto/get-users-filter.dto';
+import { UpdateUserDTO } from '../models/dto/update-user.dto';
+import { UsersService } from '../services/users.service';
 
 @Controller('v1/users')
 export class UsersController {

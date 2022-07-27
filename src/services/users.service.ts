@@ -5,10 +5,10 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { User } from './user.model';
-import { GetUsersFilterDTO } from './dto/get-users-filter.dto';
-import { CreateUserDTO } from './dto/create-user.dto';
-import { UpdateUserDTO } from './dto/update-user.dto';
+import { User } from '../models/user.model';
+import { GetUsersFilterDTO } from '../models/dto/get-users-filter.dto';
+import { CreateUserDTO } from '../models/dto/create-user.dto';
+import { UpdateUserDTO } from '../models/dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
