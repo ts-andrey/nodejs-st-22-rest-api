@@ -1,13 +1,12 @@
 export interface Repository<
-  DataType,
   IdType,
   FilterDTOType,
   CreateDTOType,
   UpdateDTOType,
 > {
-  findById(id: IdType): DataType;
-  findAll(filterDTO: FilterDTOType): DataType[];
-  create(createDTO: CreateDTOType): DataType;
-  update(id: IdType, updateDTO: UpdateDTOType): DataType;
-  delete(id: IdType): DataType;
+  findById(id: IdType): any;
+  findAll(filterDTO: FilterDTOType): any;
+  create(createDTO: CreateDTOType): any;
+  update(id: IdType, updateDTO: UpdateDTOType): any;
+  delete(id: IdType): any;
 }
