@@ -24,3 +24,6 @@ CREATE TABLE public."Users"
 ALTER TABLE IF EXISTS public."Users"
     OWNER to ants;
     
+INSERT INTO public."Users" (login, password, age) VALUES ('EvilDead_1981', 'evil', 41);
+INSERT INTO public."Users" (login, password, age) VALUES ('EvilDead_1987', 'veryEvil', 35);
+INSERT INTO public."Users" (login, password, age) VALUES ('DarknessArmy_1993', 'veryManyEvil', 29);		
