@@ -9,7 +9,7 @@ import { GetUsersFilterDTO } from 'src/users/dto/get-users-filter.dto';
 import { UpdateUserDTO } from 'src/users/dto/update-user.dto';
 import { AsyncUsersRepository } from 'src/users/interfaces/pg.users.repository';
 import { User } from 'src/users/models/user.postgres.model';
-import { PostgressService } from 'src/users/services/pg.sequelize.service';
+import { PostgressService } from 'src/services/pg.sequelize.service';
 
 @Injectable()
 export class SequelizeUsersRepository implements AsyncUsersRepository<User> {

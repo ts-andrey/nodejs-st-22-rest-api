@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 
-import { sequelize } from './../services/pg.sequelize.service';
+import { sequelize } from '../../services/pg.sequelize.service';
 
 interface UserAttributes {
   id: number;
