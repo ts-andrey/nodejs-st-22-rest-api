@@ -3,10 +3,11 @@ import { GetUsersFilterDTO } from '../dto/get-users-filter.dto';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
 import { InMemoryUsersRepository } from 'src/data-access/in-memory-users.repository';
+import { SequelizeUsersRepository } from './../../data-access/sequelize-users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: InMemoryUsersRepository) {}
+  constructor(private readonly usersRepository: SequelizeUsersRepository) {}
 
   createUser(createUserDTO: CreateUserDTO) {
     return this.usersRepository.create(createUserDTO);

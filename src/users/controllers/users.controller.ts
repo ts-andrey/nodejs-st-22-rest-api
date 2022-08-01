@@ -19,21 +19,17 @@ export class UsersController {
 
   @Post()
   createUser(@Body() createUserDTO: CreateUserDTO) {
-    return {
-      createdUser: this.usersServise.createUser(createUserDTO),
-    };
+    return this.usersServise.createUser(createUserDTO);
   }
 
   @Get()
   getAllUsers(@Query() getUsersFilterDTO: GetUsersFilterDTO) {
-    return {
-      data: this.usersServise.getAllUsers(getUsersFilterDTO),
-    };
+    return this.usersServise.getAllUsers(getUsersFilterDTO);
   }
 
   @Get(':userId')
   getUser(@Param('userId') userId: string) {
-    return { data: this.usersServise.getUser(userId) };
+    return this.usersServise.getUser(userId);
   }
 
   @Put(':userId')
@@ -41,18 +37,11 @@ export class UsersController {
     @Param('userId') userId: string,
     @Body() updateUserDTO: UpdateUserDTO,
   ) {
-    return {
-      updatedUser: this.usersServise.updateUser(userId, updateUserDTO),
-    };
+    return this.usersServise.updateUser(userId, updateUserDTO);
   }
 
   @Delete(':userId')
   removeUser(@Param('userId') userId: string) {
-    return { removedUser: this.usersServise.removeUser(userId) };
-  }
-
-  @Get('allData')
-  getAllData() {
-    return this.usersServise.getAllData();
+    return this.usersServise.removeUser(userId);
   }
 }

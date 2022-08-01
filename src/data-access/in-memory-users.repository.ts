@@ -12,7 +12,7 @@ import { UsersRepository } from 'src/users/interfaces/users.repository';
 import { User } from 'src/users/models/user.model';
 
 @Injectable()
-export class InMemoryUsersRepository implements UsersRepository {
+export class InMemoryUsersRepository implements UsersRepository<User> {
   private users: User[] = [];
 
   findById(id: string) {
