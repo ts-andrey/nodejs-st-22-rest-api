@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { GetUsersFilterDTO } from '../dto/get-users-filter.dto';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
-import { InMemoryUsersRepository } from 'src/data-access/in-memory-users.repository';
 import { SequelizeUsersRepository } from './../../data-access/sequelize-users.repository';
+import { User } from '../models/user.postgres.model';
 
 @Injectable()
 export class UsersService {
@@ -13,8 +13,16 @@ export class UsersService {
     return this.usersRepository.create(createUserDTO);
   }
 
-  getAllUsers(filter: GetUsersFilterDTO) {
-    return this.usersRepository.findAll(filter);
+  async getAll(getUsersFilterDTO: GetUsersFilterDTO) {
+    let users: User[];
+    if (getUsersFilterDTO.isAll) {
+      users = await this.usersRepository.findAll();
+    } else if (Object.keys(getUsersFilterDTO).length > 0) {
+      users = await this.usersRepository.findFiltered(getUsersFilterDTO);
+    } else {
+      users = await this.usersRepository.findActual();
+    }
+    return users;
   }
 
   getUser(id: string) {

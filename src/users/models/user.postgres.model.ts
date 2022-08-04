@@ -1,36 +1,38 @@
-import { DataTypes, Model } from 'sequelize';
-
-import { sequelize } from './../services/pg.sequelize.service';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 interface UserAttributes {
-  id: number;
+  id: string;
   login: string;
   password: string;
   age: number;
   isDeleted: boolean;
 }
+
 interface UserCreationAttributes {
   login: string;
   password: string;
   age: number;
 }
 
-export class User extends Model<UserAttributes, UserCreationAttributes> {}
-User.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      unique: true,
-      autoIncrement: true,
-    },
+@Table({ timestamps: false })
+export class User extends Model<UserAttributes, UserCreationAttributes> {
+  @Column({
+    type: DataType.UUID,
+    primaryKey: true,
+    unique: true,
+    autoIncrement: true,
+  })
+  id: string;
 
-    login: { type: DataTypes.STRING, unique: true, allowNull: false },
-    password: { type: DataTypes.STRING, allowNull: false },
+  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  login: string;
 
-    age: { type: DataTypes.INTEGER, allowNull: false },
+  @Column({ type: DataType.STRING, allowNull: false })
+  password: string;
 
-    isDeleted: { type: DataTypes.BOOLEAN, defaultValue: false },
-  },
-  { sequelize, modelName: 'User' },
-);
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  age: number;
+
+  @Column({ type: DataType.BOOLEAN, defaultValue: false })
+  isDeleted: boolean;
+}
