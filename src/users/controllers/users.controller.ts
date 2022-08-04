@@ -33,8 +33,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param('id') id: string) {
-    const user = this.usersServise.getUser(id);
+  async getUser(@Param('id') id: string) {
+    const user = await this.usersServise.getUser(id);
     if (!user) {
       throw new NotFoundException();
     }

@@ -13,14 +13,14 @@ export class UsersService {
     return this.usersRepository.create(createUserDTO);
   }
 
-  async getAll(getUsersFilterDTO: GetUsersFilterDTO) {
-    let users: User[];
+  getAll(getUsersFilterDTO: GetUsersFilterDTO) {
+    let users: Promise<User[]>;
     if (getUsersFilterDTO.isAll) {
-      users = await this.usersRepository.findAll();
+      users = this.usersRepository.findAll();
     } else if (Object.keys(getUsersFilterDTO).length > 0) {
-      users = await this.usersRepository.findFiltered(getUsersFilterDTO);
+      users = this.usersRepository.findFiltered(getUsersFilterDTO);
     } else {
-      users = await this.usersRepository.findActual();
+      users = this.usersRepository.findActual();
     }
     return users;
   }

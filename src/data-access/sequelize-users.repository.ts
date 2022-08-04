@@ -1,3 +1,4 @@
+import { AsyncUsersRepository } from './../users/interfaces/pg.users.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
@@ -7,7 +8,7 @@ import { UpdateUserDTO } from 'src/users/dto/update-user.dto';
 import { User } from 'src/users/models/user.postgres.model';
 
 @Injectable()
-export class SequelizeUsersRepository {
+export class SequelizeUsersRepository implements AsyncUsersRepository<User> {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
   async findAll() {
