@@ -1,17 +1,13 @@
+import { SequelizeModule } from '@nestjs/sequelize';
 import { SequelizeUsersRepository } from './../data-access/sequelize-users.repository';
-import { InMemoryUsersRepository } from 'src/data-access/in-memory-users.repository';
 import { Module } from '@nestjs/common';
 import { UsersController } from './controllers/users.controller';
 import { UsersService } from './services/users.service';
-import { PostgressService } from 'src/services/pg.sequelize.service';
+import { User } from './models/user.postgres.model';
 
 @Module({
+  imports: [SequelizeModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [
-    UsersService,
-    InMemoryUsersRepository,
-    SequelizeUsersRepository,
-    PostgressService,
-  ],
+  providers: [UsersService, SequelizeUsersRepository],
 })
 export class UsersModule {}

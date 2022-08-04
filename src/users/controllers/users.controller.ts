@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Query,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { GetUsersFilterDTO } from '../dto/get-users-filter.dto';
@@ -23,25 +24,30 @@ export class UsersController {
   }
 
   @Get()
-  getAllUsers(@Query() getUsersFilterDTO: GetUsersFilterDTO) {
-    return this.usersServise.getAllUsers(getUsersFilterDTO);
+  async getAllUsers(@Query() getUsersFilterDTO: GetUsersFilterDTO) {
+    const users = await this.usersServise.getAll(getUsersFilterDTO);
+    if (!users) {
+      throw new NotFoundException();
+    }
+    return users;
   }
 
-  @Get(':userId')
-  getUser(@Param('userId') userId: string) {
-    return this.usersServise.getUser(userId);
+  @Get(':id')
+  async getUser(@Param('id') id: string) {
+    const user = await this.usersServise.getUser(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
-  @Put(':userId')
-  updateUser(
-    @Param('userId') userId: string,
-    @Body() updateUserDTO: UpdateUserDTO,
-  ) {
-    return this.usersServise.updateUser(userId, updateUserDTO);
+  @Put(':id')
+  updateUser(@Param('id') id: string, @Body() updateUserDTO: UpdateUserDTO) {
+    return this.usersServise.updateUser(id, updateUserDTO);
   }
 
-  @Delete(':userId')
-  removeUser(@Param('userId') userId: string) {
-    return this.usersServise.removeUser(userId);
+  @Delete(':id')
+  removeUser(@Param('id') id: string) {
+    return this.usersServise.removeUser(id);
   }
 }
