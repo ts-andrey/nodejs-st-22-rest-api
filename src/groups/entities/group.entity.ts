@@ -1,8 +1,20 @@
-import { Column, DataType } from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-type Permission = 'READ' | 'WRITE' | 'DELETE' | 'SHARE' | 'UPLOAD_FILES';
+export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'SHARE' | 'UPLOAD_FILES';
 
-export class Group {
+interface GroupAttributes {
+  id: string;
+  name: string;
+  permissions: Permission[];
+}
+
+interface GroupCreationAttributes {
+  name: string;
+  permissions: Permission[];
+}
+
+@Table({ timestamps: false })
+export class Group extends Model<GroupAttributes, GroupCreationAttributes> {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
