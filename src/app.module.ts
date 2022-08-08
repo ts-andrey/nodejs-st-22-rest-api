@@ -4,7 +4,6 @@ import { SequelizeModule } from '@nestjs/sequelize';
 
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
-import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
