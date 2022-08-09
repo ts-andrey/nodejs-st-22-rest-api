@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Group } from './../../groups/entities/group.entity';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 
 interface UserAttributes {
   id: string;
@@ -35,4 +36,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   isDeleted: boolean;
+
+  @HasMany(() => Group)
+  groups: Group[];
 }
