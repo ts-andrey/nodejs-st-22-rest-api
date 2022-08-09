@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 import { UsersModule } from './users/users.module';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module';
       autoLoadModels: true,
       synchronize: true,
     }),
+    GroupsModule,
   ],
 })
 export class AppModule {}
