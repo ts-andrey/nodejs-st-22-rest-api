@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { User } from 'src/users/models/user.postgres.model';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 
 export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'SHARE' | 'UPLOAD_FILES';
 
@@ -28,4 +29,7 @@ export class Group extends Model<GroupAttributes, GroupCreationAttributes> {
 
   @Column({ type: DataType.STRING, allowNull: false })
   permissions: Permission[];
+
+  @HasMany(() => User)
+  users: User[];
 }

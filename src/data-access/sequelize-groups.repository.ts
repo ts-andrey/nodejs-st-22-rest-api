@@ -31,6 +31,6 @@ export class SequelizeGroupsRepository implements GroupsRepository<Group> {
 
   async delete(id: string) {
     const group = await this.findById(id);
-    return await group.destroy();
+    return await group.destroy({});
   }
 }
