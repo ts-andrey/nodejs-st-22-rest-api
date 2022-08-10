@@ -1,5 +1,12 @@
+import { UserGroup } from './../../models/UserGroup.model';
 import { User } from 'src/users/models/user.postgres.model';
-import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 
 export type Permission = 'READ' | 'WRITE' | 'DELETE' | 'SHARE' | 'UPLOAD_FILES';
 
@@ -27,9 +34,9 @@ export class Group extends Model<GroupAttributes, GroupCreationAttributes> {
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: false })
   permissions: Permission[];
 
-  @HasMany(() => User)
+  @BelongsToMany(() => User, () => UserGroup)
   users: User[];
 }
