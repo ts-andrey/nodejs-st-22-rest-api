@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize';
 
 @Injectable()
-export class UserGroupsService {
+export class UserGroupService {
   constructor(
     private readonly sequelize: Sequelize,
     @InjectModel(User) private readonly userModel: typeof User,
