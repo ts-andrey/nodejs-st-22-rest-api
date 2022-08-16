@@ -10,9 +10,7 @@ export class UserGroupService {
     private readonly sequelize: Sequelize,
     @InjectModel(User) private readonly userModel: typeof User,
     @InjectModel(Group) private readonly groupModel: typeof Group,
-  ) {
-    sequelize = new Sequelize({ dialect: 'postgres' });
-  }
+  ) {}
 
   async addUsersToGroup(groupID: string, usersIDs: string[]) {
     const t = await this.sequelize.transaction();
