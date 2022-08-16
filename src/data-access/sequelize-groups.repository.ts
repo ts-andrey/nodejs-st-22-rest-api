@@ -1,9 +1,10 @@
-import { UpdateGroupDto } from './../groups/dto/update-group.dto';
-import { CreateGroupDto } from './../groups/dto/create-group.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
-import { GroupsRepository } from 'src/groups/interfaces/groups.repository';
+import { UpdateGroupDto } from './../groups/dto/update-group.dto';
+import { CreateGroupDto } from './../groups/dto/create-group.dto';
+
+import { GroupsRepository } from '../groups/interfaces/groups.repository';
 import { Group } from './../groups/entities/group.entity';
 
 @Injectable()

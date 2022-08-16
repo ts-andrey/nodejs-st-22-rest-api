@@ -1,8 +1,8 @@
 import { Group } from './../entities/group.entity';
-import { User } from 'src/users/models/user.postgres.model';
+import { User } from '../../users/models/user.postgres.model';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class UserGroupService {
@@ -10,7 +10,9 @@ export class UserGroupService {
     private readonly sequelize: Sequelize,
     @InjectModel(User) private readonly userModel: typeof User,
     @InjectModel(Group) private readonly groupModel: typeof Group,
-  ) {}
+  ) {
+    sequelize = new Sequelize({ dialect: 'postgres' });
+  }
 
   async addUsersToGroup(groupID: string, usersIDs: string[]) {
     const t = await this.sequelize.transaction();

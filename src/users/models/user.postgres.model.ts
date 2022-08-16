@@ -28,7 +28,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     type: DataType.UUID,
     primaryKey: true,
     unique: true,
-    autoIncrement: true,
   })
   id: string;
 
