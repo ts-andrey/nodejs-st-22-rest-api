@@ -1,4 +1,3 @@
-import { LoggerInterceptor } from './../interceptors/logger.interceptor';
 import {
   ArgumentsHost,
   Catch,
@@ -8,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Catch(HttpException)
+@Catch()
 export class ErrorLoggerFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
