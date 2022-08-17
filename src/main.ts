@@ -1,3 +1,4 @@
+import { LoggerInterceptor } from './interceptors/logger.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -14,6 +15,7 @@ process.on('unhandledRejection', (reason, promise) =>
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new ErrorLoggerFilter());
+  app.useGlobalInterceptors(new LoggerInterceptor());
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
