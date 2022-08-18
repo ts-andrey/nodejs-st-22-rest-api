@@ -4,6 +4,7 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 
@@ -11,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
 
 import { InfoLoggerMiddleware } from './middlewares/info-logger.middleware';
+import { LoggerInterceptor } from './interceptors/logger.interceptor';
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import { InfoLoggerMiddleware } from './middlewares/info-logger.middleware';
     UsersModule,
     GroupsModule,
   ],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: LoggerInterceptor }],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
