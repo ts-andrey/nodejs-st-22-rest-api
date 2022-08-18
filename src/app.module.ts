@@ -1,13 +1,19 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
 
+import { InfoLoggerMiddleware } from './middlewares/info-logger.middleware';
+
 @Module({
   imports: [
-    UsersModule,
     ConfigModule.forRoot({ envFilePath: '.env.example' }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -19,7 +25,14 @@ import { GroupsModule } from './groups/groups.module';
       autoLoadModels: true,
       synchronize: true,
     }),
+    UsersModule,
     GroupsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(InfoLoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}

@@ -1,8 +1,8 @@
 import { Group } from './../entities/group.entity';
-import { User } from 'src/users/models/user.postgres.model';
+import { User } from '../../users/models/user.postgres.model';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class UserGroupService {

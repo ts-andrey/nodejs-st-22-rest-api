@@ -27,7 +27,6 @@ export class Group extends Model<GroupAttributes, GroupCreationAttributes> {
     type: DataType.UUID,
     primaryKey: true,
     unique: true,
-    autoIncrement: true,
   })
   id: string;
 

@@ -1,14 +1,17 @@
+import { User } from 'src/users/models/user.postgres.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Module } from '@nestjs/common';
-import { GroupsService } from './services/groups.service';
+
 import { GroupsController } from './controllers/groups.controller';
 import { Group } from './entities/group.entity';
+import { UserGroup } from '../models/UserGroup.model';
 import { SequelizeGroupsRepository } from './../data-access/sequelize-groups.repository';
-import { UserGroup } from 'src/models/UserGroup.model';
+import { UserGroupService } from './services/user-group.service';
+import { GroupsService } from './services/groups.service';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Group, UserGroup])],
+  imports: [SequelizeModule.forFeature([Group, UserGroup, User])],
   controllers: [GroupsController],
-  providers: [GroupsService, SequelizeGroupsRepository],
+  providers: [GroupsService, SequelizeGroupsRepository, UserGroupService],
 })
 export class GroupsModule {}
