@@ -13,6 +13,7 @@ import { GroupsModule } from './groups/groups.module';
 
 import { InfoLoggerMiddleware } from './middlewares/info-logger.middleware';
 import { LoggerInterceptor } from './interceptors/logger.interceptor';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { LoggerInterceptor } from './interceptors/logger.interceptor';
     }),
     UsersModule,
     GroupsModule,
+    AuthModule,
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: LoggerInterceptor }],
 })

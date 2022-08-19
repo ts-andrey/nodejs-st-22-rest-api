@@ -1,10 +1,13 @@
-import { AsyncUsersRepository } from './../users/interfaces/pg.users.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
+
+import { LoginDTO } from '../auth/dto/login.dto';
 import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 import { GetUsersFilterDTO } from 'src/users/dto/get-users-filter.dto';
 import { UpdateUserDTO } from 'src/users/dto/update-user.dto';
+
+import { AsyncUsersRepository } from './../users/interfaces/pg.users.repository';
 import { User } from 'src/users/models/user.postgres.model';
 
 @Injectable()
@@ -40,6 +43,16 @@ export class SequelizeUsersRepository implements AsyncUsersRepository<User> {
   async findById(id: string) {
     return await this.userModel.findOne({
       where: { id, isDeleted: false },
+    });
+  }
+
+  async findByLogin(loginDto: LoginDTO) {
+    const { login, password } = loginDto;
+    return await this.userModel.findOne({
+      where: {
+        login,
+        password,
+      },
     });
   }
 

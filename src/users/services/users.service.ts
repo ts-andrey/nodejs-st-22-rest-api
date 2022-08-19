@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
+
 import { GetUsersFilterDTO } from '../dto/get-users-filter.dto';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import { UpdateUserDTO } from '../dto/update-user.dto';
+
 import { SequelizeUsersRepository } from './../../data-access/sequelize-users.repository';
 import { User } from '../models/user.postgres.model';
 
